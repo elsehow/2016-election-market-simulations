@@ -160,7 +160,7 @@ row = ','.join([
     str(predicted_prob_pw),
     str(clinton538), 
     str(clinton_pw),
-    ])
+    ])+'\n'
 fd = open('predictions.csv','a')
 fd.write(row)
 fd.close()

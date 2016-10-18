@@ -1,3 +1,5 @@
 date,predicted market price,predicted prob clinton (pw debiased market prices),predicted prob clinton (predictwise probabilities),FiveThirtyEight (Clinton),PredictWise (Clinton)
 
-2016-10-18T15:41:16.731046,0.8725,93.729,91.587,87.57,90.0
+2016-10-18T15:46:35.603561,0.87399,93.718,91.815,87.57,90.0
+2016-10-18T15:47:26.756101,0.87455,93.553,91.763,87.57,90.0
+2016-10-18T15:48:16.908815,0.87323,93.557,91.8,87.57,90.0
