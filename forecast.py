@@ -3,14 +3,21 @@ import json
 import numpy.random as random
 random.seed()
 import datetime
+# for each election in the simulation,
+# pick a temperature from a normal distribution
+temperature_mean = 0
+temperature_stdev = 0.1
+# for each state in each election,
+# probability offset is chosen from normal distribution
+# with mean at election temperature
+state_offset_stdev = 0.1
+# how many simulations to run
+num_trials = 100000
 
 def request_json (url):
     return json.loads(
            requests.get(url, headers={
             'Accept':'application/json'}).content)
-
-my_url = 'https://www.predictit.org/api/marketdata/ticker/RNOM16'
-request_json(my_url)
 
 def predictit (ticker):
     return request_json('https://www.predictit.org/api/marketdata/ticker/' + ticker)
@@ -42,8 +49,6 @@ def probability (state_abbreviation, party=None):
        return mkt['LastTradePrice']
     return (sell+buy)/2.0
 
-probability('CA')
-
 
 def predictwise_states (col):
     table = json.loads(requests.get('http://table-cache1.predictwise.com/latest/table_1551.json').content)
@@ -57,8 +62,6 @@ def predictwise_states (col):
 debiased_states = predictwise_states(2)
 # predictwise states
 pw_states = predictwise_states(1)
-
-
 
 def state (abbrev, delegates):
     return {"abbreviation": abbrev,
@@ -80,17 +83,6 @@ def bound (probability):
         return 0
     return probability
 
-# normal(0,1)
-
-
-# for each election in the simulation,
-# pick a temperature from a normal distribution
-temperature_mean = 0
-temperature_stdev = 0.1
-# for each state in each election,
-# probability offset is chosen from normal distribution
-# with mean at election temperature
-state_offset_stdev = 0.1
 
 def decide (probability):
     return random.random()<probability
@@ -121,7 +113,7 @@ def percent_winning (simulations):
     winning = lambda delegates: delegates > 268
     return float(len(filter(winning, simulations)))/float(num_trials)
 
-num_trials = 100000
+# predicted market price simulations
 simulations = simulate_elections(num_trials, states)
 predicted_market_price = percent_winning(simulations)
 print 'predicted market price:',  predicted_market_price
@@ -134,7 +126,8 @@ simulations = simulate_elections(num_trials, pw_states)
 predicted_prob_pw = percent_winning(simulations)*100
 print 'predicted Clinton (PredictWise state probabilities):', predicted_prob_pw, '%'
 
-print 'trump-favoring odds'
+# overvalued clinton shares
+print 'clinton odds that are too high'
 unlikely = filter(lambda s: s['probability']<0.5 and s['probability']>0.2, states)
 print map(lambda s: (s['abbreviation'], s['probability']), unlikely)
 
@@ -153,6 +146,7 @@ def dem (r):
 clinton_pw = float(filter(dem, predictwise)[0][1].split(' ')[0])
 print 'pw', clinton_pw
 
+# write to CSV
 row = ','.join([
     datetime.datetime.now().isoformat(),
     str(predicted_market_price),
