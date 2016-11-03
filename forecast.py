@@ -127,8 +127,8 @@ predicted_prob_pw = percent_winning(simulations)*100
 print 'predicted Clinton (PredictWise state probabilities):', predicted_prob_pw, '%'
 
 # overvalued clinton shares
-print 'clinton odds that are too high'
-unlikely = filter(lambda s: s['probability']<0.5 and s['probability']>0.2, states)
+print 'uncertain clinton odds'
+unlikely = filter(lambda s: s['probability']<0.7 and s['probability']>0.2, states)
 print map(lambda s: (s['abbreviation'], s['probability']), unlikely)
 
 # fivethirtyeight
