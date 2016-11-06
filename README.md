@@ -1,6 +1,6 @@
-# Does Clinton have a 97% chance of winning? 
+# Estimating national election odds from state-level markets
 
-Please read [the accompanying blog post](http://blog.cosmopol.is/forecasting/2016/10/16/clinton.html)
+Read [the accompanying blog post](http://blog.cosmopol.is/forecasting/2016/10/16/clinton.html)
 
 **All the code for replicating these results [are available here, as a Jupyter notebook](https://github.com/elsehow/2016-election-market-simulations/blob/master/market-forecasts.ipynb)**.
 
